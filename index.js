@@ -16,6 +16,7 @@
 
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const { async } = require('rxjs');
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 const connection = mysql.createConnection(
@@ -88,6 +89,20 @@ startCMS = async () => {
                     break;
             }
         });
+};
+
+viewAllDepartmets = async () => {
+    connection.query("SELECT * FROM department", (err, data) => {
+        try {
+            console.log("Displaying all departments:");
+            console.table(data);
+            // start();
+        } catch (error) {
+            if (err)
+                throw err;
+        }
+
+    });
 };
 
 // whenDone = () => {
