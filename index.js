@@ -117,7 +117,26 @@ viewAllRoles = async () => {
         };
 
     });
-}
+};
+
+// function to View all employees
+viewAllEmployees = async () => {
+    connection.query("SELECT * FROM employee", (err, data) => {
+        try {
+            console.log("Displaying all employees:");
+            console.table(data);
+            start();
+        } catch (error) {
+            if (err)
+                throw error;
+        }
+
+    });
+};
+
+
+
+
 
 // whenDone = () => {
 //     await = startCMS();
