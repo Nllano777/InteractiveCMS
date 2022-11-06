@@ -17,18 +17,14 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 require("dotenv").config();
-console.log("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:")
-
 const PORT = process.env.PORT || 3001;
-
 const connection = mysql.createConnection(
     {
+        // MySQL  Below our username, and password are being linked to DOTENV package.
         host: 'localhost',
-        // MySQL username,
-        user: process.env.,
-        // TODO: Add MySQL password here
-        password: 'my$QLpassword',
-        database: 'Ford_db'
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME
     },
     console.log("Connected to the Ford_db database.")
 );
@@ -37,6 +33,9 @@ connection.connect(err => {
     console.log('connection established!' + "🚀");
     await = startCMS();
 });
+// ==========================================================================================================
+console.log("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:")
+
 
 startCMS = async () => {
     return inquirer.prompt([
