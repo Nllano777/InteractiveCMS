@@ -16,6 +16,7 @@
 
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+require("dotenv").config();
 console.log("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:")
 
 const PORT = process.env.PORT || 3001;
@@ -23,9 +24,8 @@ const PORT = process.env.PORT || 3001;
 const connection = mysql.createConnection(
     {
         host: 'localhost',
-        PORT: 3001,
         // MySQL username,
-        user: 'root',
+        user: process.env.,
         // TODO: Add MySQL password here
         password: 'my$QLpassword',
         database: 'Ford_db'
@@ -57,31 +57,31 @@ startCMS = async () => {
         },]).then((SelectedOptionIsEqualTo) => {
             switch (SelectedOptionIsEqualTo.ListOfChoicesArr) {
                 case "View all departments":
-                    await = viewDepts();
+                    await = viewAllDepartmets();
                     break;
 
                 case "View all roles":
-                    await = viewRoles();
+                    await = viewAllRoles();
                     break;
 
                 case "View all employees":
-                    await = viewEes();
+                    await = viewAllEmployees();
                     break;
 
                 case "Add a department":
-                    await = addDept();
+                    await = CreateDepartment();
                     break;
 
                 case "Add a role":
-                    await = addRole();
+                    await = CreateRole();
                     break;
 
                 case "Add an employee":
-                    await = addEe();
+                    await = addEmployee();
                     break;
 
                 case "Update employee role":
-                    await = update();
+                    await = updateEmpRole();
                     break;
 
                 case "Exit":

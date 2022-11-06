@@ -1,7 +1,7 @@
 
 USE Ford_db;
 
-INSERT INTO department(name)
+INSERT INTO department(department_name)
 VALUES
     ("Sales"),
     ("HR"),
@@ -10,20 +10,30 @@ VALUES
 
 INSERT INTO role(title, salary, department_id)
 VALUES
-    ("Sales Lead", 100000, 1),
-    ("Salesperson", 80000, 1),
-    ("Lead of HR", 150000, 2),
-    ("assistant of HR", 120000, 2),
-    ("Mechanic", 120000, 3),
-    ("Parts Lead", 250000, 4),
-    ("Assistant", 190000, 4);
+    ("General Manager", 270000, 1),
+    ("Sales Manager", 150000, 1),
+    ("Sales Rep", 80000, 1),
+    ("Head of HR", 150000, 2),
+    ("assistant of HR", 50000, 2),
+    ("assistant of HR", 50000, 2),
+    ("Diesel Tech", 125000, 3),
+    ("Lead Tech", 100000, 3),
+    ("Used car Tech", 50000, 3),
+    ("Parts Manager", 70000, 4),
+    ("Parts Rep", 45000, 4),
+    ("Parts Rep", 45000, 4);
 
 INSERT INTO employee(first_name, last_name, role_id, manager_id)
-VALUES
-    ("Nate", "Wesly", 1, NULL),
-    ("Rob", "ELm", 2, 1),
-    ("Sean", "Keaton", 3, NULL),
-    ("Cory", "Hedrick", 4, 3),
-    ("Elly", "Sweets", 5, NULL),
-    ("Dave", "Thomas", 6, NULL),
-    ("Chris", "Mueller", 7, 6);
+VALUES ("Dave", "Hosley", 1, NULL),
+       ("Samantha", "Wes", 2, 1),
+       ("Kyle", "Davis", 3, 1),
+       ("Aston", "Kuthcer", 4, NULL),
+       ("Erick", "Jones", 5, 4),
+       ("Thomas", "Hosley", 6, 4),
+       ("Bill", "Clinton", 7, NULL),
+       ("Patrick", "Bateman", 8, 7),
+       ("Austin", "Smith", 9, 7),
+       ("Camila", "Ela", 10, NULL),
+       ("Larson", "Ler", 11, 10),
+       ("Wallace", "Berchman", 12, 10);
+    
