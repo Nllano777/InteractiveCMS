@@ -105,6 +105,20 @@ viewAllDepartmets = async () => {
     });
 };
 
+viewAllRoles = async () => {
+    connection.query("SELECT * FROM role", (err, data) => {
+        try {
+            console.log("Displaying all roles:");
+            console.table(data);
+            start();
+        } catch (error) {
+            if (err)
+                throw error;
+        };
+
+    });
+}
+
 // whenDone = () => {
 //     await = startCMS();
 // }
