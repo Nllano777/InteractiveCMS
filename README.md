@@ -39,7 +39,15 @@ https://github.com/Nllano777/InteractiveCMS
 
 ## Installation
 
-Install Node.js https://nodejs.org/dist/v16.8.0/node-v16.8.0-x64.msi
+1. Install Node.js https://nodejs.org/dist/v16.8.0/node-v16.8.0-x64.msi
+2. Clone the data from this git repository
+3. Install NPM https://docs.npmjs.com/cli/v6/configuring-npm/install
+4. Install and Configure MySQL https://dev.mysql.com/downloads/installer/
+5. Rename .env.EXAMPLE to .env and configure with your DB Credentials
+6. Navigate to the git repo using your preferred CommandLine Application (Recommended GitBash or Inline Terminal within VSCode)
+7. cd db/ and run 'mysql -u root -p' and enter DataBase Password
+8. run 'source schema.sql' then 'source seeds.sql'
+9. run 'npm i' 11 run 'npm start'
 
 ---
 
