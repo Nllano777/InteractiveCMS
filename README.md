@@ -27,7 +27,7 @@ Developers frequently have to create interfaces that allow non-developers to eas
 
 ## Link 
 
-youtube.here
+https://www.youtube.com/watch?v=As5I9GpXhBk
 
 ---
 
@@ -74,12 +74,13 @@ Following a code review, your feature will be merged.
 ## Contact
 
 GitHub: https://github.com/Nllano777  
-Email: Navigate to the git repo using your preferred CommandLine Application (Recommended GitBash or Inline Terminal within VSCode)
+Email: Nllbr99@gmail.com
 
 ---
 
 ## Credits
 
 Nicolas Llano
+Special Thanks to my Instructors Henery Winget and Chris Sinlasath.
 
   
