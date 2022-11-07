@@ -68,16 +68,16 @@ startCMS = async () => {
                     await = viewAllEmployees();
                     break;
 
+                case "Add an employee":
+                    await = addEmployee();
+                    break;
+
                 case "Add a department":
                     await = CreateDepartment();
                     break;
 
                 case "Add a role":
                     await = CreateRole();
-                    break;
-
-                case "Add an employee":
-                    await = addEmployee();
                     break;
 
                 case "Update employee role":
@@ -96,7 +96,7 @@ viewAllDepartmets = async () => {
         try {
             console.log("Displaying all departments:");
             console.table(data);
-            // start();
+
         } catch (error) {
             if (err)
                 throw err;
@@ -110,7 +110,21 @@ viewAllRoles = async () => {
         try {
             console.log("Displaying all roles:");
             console.table(data);
-            start();
+
+        } catch (error) {
+            if (err)
+                throw error;
+        };
+
+    });
+};
+
+viewSalaryTotal = async () => {
+    connection.query("SELECT * FROM role", (err, data) => {
+        try {
+            console.log("Displaying all roles:");
+            console.table(data);
+
         } catch (error) {
             if (err)
                 throw error;
@@ -124,8 +138,7 @@ viewAllEmployees = async () => {
     connection.query("SELECT * FROM employee", (err, data) => {
         try {
             console.log("Displaying all employees:");
-            console.table(data);
-            start();
+            // console.table(data);
         } catch (error) {
             if (err)
                 throw error;
@@ -134,7 +147,76 @@ viewAllEmployees = async () => {
     });
 };
 
+// function to Add an employee
+addEmployee = async () => {
+    const sql = "SELECT * FROM employee, role";
+    connection.query(sql, (err, results) => {
+        if (err) throw err;
 
+        inquirer.prompt([
+            {
+                name: "firstName",
+                type: "input",
+                message: "What is the first name?",
+                validate: (value) => {
+                    if (value) {
+                        return true;
+                    } else {
+                        console.log("Please enter the first name.");
+                    }
+                }
+            },
+            {
+                name: "lastName",
+                type: "input",
+                message: "What is the last name?",
+                validate: (value) => {
+                    if (value) {
+                        return true;
+                    } else {
+                        console.log("Please enter the last name.");
+                    }
+                }
+            },
+            {
+                name: "role",
+                type: "rawlist",
+                choices: () => {
+                    let choiceArray = [];
+                    for (let i = 0; i < results.length; i++) {
+                        choiceArray.push(results[i].title);
+                    }
+                    //remove duplicates
+                    let cleanChoiceArray = [...new Set(choiceArray)];
+                    return cleanChoiceArray;
+                },
+                message: "What is the role?"
+            }
+        ]).then(answer => {
+            let chosenRole;
+
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].title === answer.role) {
+                    chosenRole = results[i];
+                }
+            }
+
+            connection.query(
+                "INSERT INTO employee SET ?",
+                {
+                    first_name: answer.firstName,
+                    last_name: answer.lastName,
+                    role_id: chosenRole.id,
+                },
+                (err) => {
+                    if (err) throw err;
+                    console.log(`New employee ${answer.firstName} ${answer.lastName} has been added! as a ${answer.role}`);
+                    // start();
+                }
+            )
+        });
+    });
+}
 
 
 
