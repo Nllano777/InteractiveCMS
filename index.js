@@ -1,24 +1,13 @@
 
-//requirements
-// Build a command-line application that at a minimum allows the user to:
-// Add departments, roles, employees
-// View departments, roles, employees
-// Update employee roles
-// ============================================================================
-// ============================================================================
-// Bonus points if you're able to:
-// Update employee managers
-// View employees by manager
-// Delete departments, roles, and employees
-// View the total utilized budget of a department -- ie the combined salaries of all employees in that department
-// ============================================================================
-// ============================================================================
+
+
 
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const { async } = require('rxjs');
 require("dotenv").config();
 const PORT = process.env.PORT || 3001;
+// ============================================================================
 const connection = mysql.createConnection(
     {
         // MySQL  Below our username, and password are being linked to DOTENV package.
@@ -36,8 +25,7 @@ connection.connect(err => {
 });
 // ==========================================================================================================
 console.log("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:")
-
-
+// ============================================================================
 startCMS = async () => {
     return inquirer.prompt([
         {
@@ -48,12 +36,10 @@ startCMS = async () => {
                 "View all departments",
                 "View all roles",
                 "View all employees",
+                "Display Total of Salaries",
                 "Add a department",
-                "Add a role",
                 "Add an employee",
-                "Update employee role",
                 "Exit"],
-
         },]).then((SelectedOptionIsEqualTo) => {
             switch (SelectedOptionIsEqualTo.ListOfChoicesArr) {
                 case "View all departments":
@@ -78,14 +64,6 @@ startCMS = async () => {
 
                 case "Add a department":
                     await = CreateDepartment();
-                    break;
-
-                case "Add a role":
-                    await = CreateRole();
-                    break;
-
-                case "Update employee role":
-                    await = updateEmpRole();
                     break;
 
                 case "Exit":
@@ -123,19 +101,18 @@ viewAllRoles = async () => {
     });
 };
 
-// viewSalaryTotal = async () => {
-//     connection.query("SELECT * FROM role", (err, salaries) => {
-//         try {
-//             console.log("Displaying all Combined Salaries:");
-//             console.log(salaries);
+viewSalaryTotal = async () => {
+    connection.query("SELECT * FROM role, salaries", (err, salaries) => {
+        try {
+            console.log("Displaying all Combined Salaries:");
+            console.log(salaries);
+        } catch (error) {
+            if (err)
+                throw error;
+        };
 
-//         } catch (error) {
-//             if (err)
-//                 throw error;
-//         };
-
-//     });
-// };
+    });
+};
 
 // function to View all employees
 viewAllEmployees = async () => {
@@ -187,9 +164,11 @@ addEmployee = async () => {
                 type: "rawlist",
                 choices: () => {
                     let choiceArray = [];
+
                     for (let i = 0; i < results.length; i++) {
                         choiceArray.push(results[i].title);
                     }
+
                     //remove duplicates
                     let cleanChoiceArray = [...new Set(choiceArray)];
                     return cleanChoiceArray;
@@ -197,11 +176,11 @@ addEmployee = async () => {
                 message: "What is the role?"
             }
         ]).then(answer => {
-            let chosenRole;
+            let selectedRole;
 
             for (let i = 0; i < results.length; i++) {
                 if (results[i].title === answer.role) {
-                    chosenRole = results[i];
+                    selectedRole = results[i];
                 }
             }
 
@@ -210,21 +189,51 @@ addEmployee = async () => {
                 {
                     first_name: answer.firstName,
                     last_name: answer.lastName,
-                    role_id: chosenRole.id,
+                    role_id: selectedRole.id,
                 },
                 (err) => {
                     if (err) throw err;
                     console.log(`New employee ${answer.firstName} ${answer.lastName} has been added! as a ${answer.role}`);
-                    // start();
+
                 }
             )
         });
     });
+
 }
 
 
+// function to Add a department
+CreateDepartment = async () => {
+    inquirer.prompt([{
+        type: 'confirm',
+        name: 'boolean',
+        message: 'Would you like to create a new department?',
+        default: 'false'
+    },
+    {
+        name: "department",
+        type: "input",
+        message: "What is the new department name?",
+        validate: (value) => {
+            if (value) {
+                return true;
+            } else {
+                console.log("Please enter department name.");
+            }
+        }
+    },
+    ]).then(answer => {
+        connection.query(
+            "INSERT INTO department SET ?",
+            {
+                name: answer.department
+            },
+            (err) => {
+                if (err) throw err;
+                console.log(`New department ${answer.department} has been added!`);
+            }
+        );
+    });
+};
 
-// whenDone = () => {
-//     await = startCMS();
-// }
-// whenDone()
