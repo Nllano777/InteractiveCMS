@@ -1,11 +1,8 @@
-
-
-
-
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const { async } = require('rxjs');
 require("dotenv").config();
+const clc = require('cli-color');
 const PORT = process.env.PORT || 3001;
 // ============================================================================
 const connection = mysql.createConnection(
@@ -24,7 +21,7 @@ connection.connect(err => {
     await = startCMS();
 });
 // ==========================================================================================================
-console.log("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:")
+console.log(clc.bgRed.black.bold("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:"));
 // ============================================================================
 startCMS = async () => {
     return inquirer.prompt([
@@ -100,7 +97,7 @@ viewAllRoles = async () => {
 
     });
 };
-
+// Working on it
 viewSalaryTotal = async () => {
     connection.query("SELECT * FROM role, salaries", (err, salaries) => {
         try {
@@ -114,7 +111,7 @@ viewSalaryTotal = async () => {
     });
 };
 
-// function to View all employees
+// Async Function to View all Employees
 viewAllEmployees = async () => {
     connection.query("SELECT * FROM employee", (err, data) => {
         try {
@@ -128,7 +125,7 @@ viewAllEmployees = async () => {
     });
 };
 
-// function to Add an employee
+// Async Function to Add an Employee
 addEmployee = async () => {
     const sql = "SELECT * FROM employee, role";
     connection.query(sql, (err, results) => {
@@ -202,8 +199,7 @@ addEmployee = async () => {
 
 }
 
-
-// function to Add a department
+// Async Function to Add a Department
 CreateDepartment = async () => {
     inquirer.prompt([{
         type: 'confirm',
