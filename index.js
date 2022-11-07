@@ -78,7 +78,7 @@ startCMS = async () => {
             }
         });
 };
-
+// Async Function to view All Departments
 viewAllDepartmets = async () => {
     connection.query("SELECT * FROM department", (err, data) => {
         try {
@@ -92,7 +92,7 @@ viewAllDepartmets = async () => {
 
     });
 };
-
+// Async Function to view All Roles
 viewAllRoles = async () => {
     connection.query("SELECT * FROM role", (err, data) => {
         try {
@@ -106,7 +106,7 @@ viewAllRoles = async () => {
 
     });
 };
-// Working on it
+// Working on it.... :(
 viewSalaryTotal = async () => {
     connection.query("SELECT * FROM role, salaries", (err, salaries) => {
         try {
@@ -119,8 +119,7 @@ viewSalaryTotal = async () => {
 
     });
 };
-
-// Async Function to View all Employees
+// Async Function to View All Employees
 viewAllEmployees = async () => {
     connection.query("SELECT * FROM employee", (err, data) => {
         try {
@@ -133,14 +132,19 @@ viewAllEmployees = async () => {
 
     });
 };
-
-// Async Function to Add an Employee
+// Async Function to Add a Single Employee
 addEmployee = async () => {
     const sql = "SELECT * FROM employee, role";
     connection.query(sql, (err, results) => {
         if (err) throw err;
 
         inquirer.prompt([
+            {
+                type: 'confirm',
+                name: 'boolean',
+                message: 'Would you like to add a new Employee?',
+                default: 'false'
+            },
             {
                 name: "firstName",
                 type: "input",
@@ -169,13 +173,17 @@ addEmployee = async () => {
                 name: "role",
                 type: "rawlist",
                 choices: () => {
+
+                    // Empty Array of Choices
                     let choiceArray = [];
+
+                    //  create for loop
 
                     for (let i = 0; i < results.length; i++) {
                         choiceArray.push(results[i].title);
                     }
 
-                    //remove duplicates
+                    //Remove any Duplicates There may be
                     let cleanChoiceArray = [...new Set(choiceArray)];
                     return cleanChoiceArray;
                 },
@@ -206,7 +214,7 @@ addEmployee = async () => {
         });
     });
 
-}
+};
 
 // Async Function to Add a Department
 CreateDepartment = async () => {
