@@ -68,6 +68,10 @@ startCMS = async () => {
                     await = viewAllEmployees();
                     break;
 
+                case "Display Total of Salaries":
+                    await = viewSalaryTotal();
+                    break;
+
                 case "Add an employee":
                     await = addEmployee();
                     break;
@@ -119,26 +123,26 @@ viewAllRoles = async () => {
     });
 };
 
-viewSalaryTotal = async () => {
-    connection.query("SELECT * FROM role", (err, data) => {
-        try {
-            console.log("Displaying all roles:");
-            console.table(data);
+// viewSalaryTotal = async () => {
+//     connection.query("SELECT * FROM role", (err, salaries) => {
+//         try {
+//             console.log("Displaying all Combined Salaries:");
+//             console.log(salaries);
 
-        } catch (error) {
-            if (err)
-                throw error;
-        };
+//         } catch (error) {
+//             if (err)
+//                 throw error;
+//         };
 
-    });
-};
+//     });
+// };
 
 // function to View all employees
 viewAllEmployees = async () => {
     connection.query("SELECT * FROM employee", (err, data) => {
         try {
             console.log("Displaying all employees:");
-            // console.table(data);
+            console.table(data);
         } catch (error) {
             if (err)
                 throw error;
