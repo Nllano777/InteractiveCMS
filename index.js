@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 const { async } = require('rxjs');
 require("dotenv").config();
 const clc = require('cli-color');
+const figlet = require("figlet");
 const PORT = process.env.PORT || 3001;
 // ============================================================================
 const connection = mysql.createConnection(
@@ -20,8 +21,16 @@ connection.connect(err => {
     console.log('connection established!' + "🚀");
     await = startCMS();
 });
+
 // ==========================================================================================================
-console.log(clc.bgRed.black.bold("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:"));
+// ==========================================================================================================
+figlet("Ford Motor Company", (err, data) => {
+    if (err) throw err;
+    console.log(data);
+})
+// ============================================================================
+// ============================================================================
+console.log(clc.bgBlueBright.whiteBright.bold("This is a Functional command-line application that allows users to Add departments, roles and employees, you can also View departments, roles, employees.To continue please follow the steps below:"));
 // ============================================================================
 startCMS = async () => {
     return inquirer.prompt([
